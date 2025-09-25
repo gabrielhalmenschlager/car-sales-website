@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Link from "next/link"
+import { NavBar } from "@/components/ui/navbar"
 
 // Mock data for vehicles
 const mockVehicles = [
@@ -104,45 +105,9 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Car className="h-8 w-8 text-blue-600" />
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Santa Veículos Admin</h1>
-                <p className="text-sm text-gray-600">Painel de Gerenciamento</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/">
-                <Button variant="outline" size="sm">
-                  Ver Site
-                </Button>
-              </Link>
-              <Link href="/admin/propostas">
-                <Button variant="outline" size="sm">
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  Propostas
-                </Button>
-              </Link>
-              <Link href="/admin/relatorios">
-                <Button variant="outline" size="sm">
-                  <TrendingUp className="h-4 w-4 mr-2" />
-                  Relatórios
-                </Button>
-              </Link>
-              <Link href="/admin/veiculo/novo">
-                <Button className="bg-blue-600 hover:bg-blue-700">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Novo Veículo
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      
+      {/* NavBar */}
+      <NavBar/>
 
       <div className="container mx-auto px-4 py-8">
         {/* Stats Cards */}
