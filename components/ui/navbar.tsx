@@ -8,7 +8,7 @@ export function NavBar() {
     <header className="border-b border-green-600 bg-black backdrop-blur supports-[backdrop-filter]:bg-black/95 shadow-md">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo e Nome */}
+          {/* Logo */}
           <div className="flex items-center gap-3">
             <Image 
               src="/logo-santa-veiculos.png"
