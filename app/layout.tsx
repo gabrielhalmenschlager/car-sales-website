@@ -7,7 +7,7 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Santa Veículos',
   description: 'Created by Bruno Zuge and Gabriel Halmenschlager',
- 
+
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -24,4 +24,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   )
 }
-
