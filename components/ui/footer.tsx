@@ -25,13 +25,13 @@ export function Footer() {
 
             {/* Redes sociais */}
             <div className="flex gap-4 mt-4">
-              <Link href="https://wa.me/5551999200699" target="_blank" className="hover:text-green-500">
+              <Link href="https://api.whatsapp.com/send?phone=5551999200699" target="_blank" className="hover:text-green-500">
                 <FaWhatsapp className="w-6 h-6" />
               </Link>
-              <Link href="https://instagram.com/seuusuario" target="_blank" className="hover:text-green-500">
+              <Link href="https://www.instagram.com/santaveiculosoficial/" target="_blank" className="hover:text-green-500">
                 <FaInstagram className="w-6 h-6" />
               </Link>
-              <Link href="https://facebook.com/seuusuario" target="_blank" className="hover:text-green-500">
+              <Link href="https://www.facebook.com/santaveiculosrs/" target="_blank" className="hover:text-green-500">
                 <FaFacebook className="w-6 h-6" />
               </Link>
             </div>

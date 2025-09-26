@@ -10,13 +10,13 @@ export const metadata: Metadata = {
  
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
+      <head>
+        {/* Favicon */}
+        <link rel="icon" type="image/png" href="/icone-santa-veiculos.jpeg" />
+      </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         {children}
         <Analytics />
@@ -24,3 +24,4 @@ export default function RootLayout({
     </html>
   )
 }
+
