@@ -6,6 +6,7 @@ import Link from "next/link"
 import { SearchBar } from "@/components/ui/searchbar"
 import { NavBar } from "@/components/ui/navbar"
 import { Footer } from "@/components/ui/footer"
+import TextType from "@/components/ui/text-type";
 
 // Mock data (sem alterações)
 const featuredCars = [
@@ -56,31 +57,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-black text-gray-300">
       <NavBar />
 
-      {/* Hero Section */}
-      <section 
-        className="relative py-35"
-        style={{
-          backgroundImage: "url(https://lh3.googleusercontent.com/p/AF1QipP4HjSL_xa0c3qZxgoO_CjNa8P6mvGVOPnRjmV7=s680-w680-h510-rw)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
-        }}
-        >
-
-        {/* Overlay escuro */}
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Encontre o Carro dos Seus Sonhos
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Os melhores seminovos com garantia, procedência e atendimento de confiança.
-          </p>
-        </div>
-        <SearchBar />
-      </section>
-
       {/* Featured Cars */}
       <section className="py-24 bg-black">
         <div className="container mx-auto px-4">
@@ -93,7 +69,15 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredCars.map((car) => (
               // Cards com fundo cinza escuro e borda verde no hover
-              <Card key={car.id} className="overflow-hidden bg-gray-950 border border-gray-800 hover:border-green-500 transition-all duration-300 rounded-lg shadow-lg flex flex-col">
+              <Card
+                key={car.id}
+                className="
+                  overflow-hidden bg-gray-950 border border-gray-800 
+                  rounded-lg shadow-lg flex flex-col
+                  transform transition-transform duration-500 ease-in-out
+                  hover:-translate-y-2 hover:scale-105 hover:border-green-500
+                "
+              >
                 <div className="relative">
                   <img
                     src={car.image || "/placeholder.svg"}
@@ -102,11 +86,15 @@ export default function HomePage() {
                   />
                   {/* Badge de status com cor verde */}
                   <Badge
-                    className={`absolute top-4 right-4 text-black font-semibold ${car.status === "available" ? "bg-green-500" : car.status === "reserved" ? "bg-yellow-500" : "bg-red-600"
-                      }`}
+                    className={`
+                      absolute top-4 right-4 text-black font-semibold
+                      transition-colors duration-500 ease-in-out
+                      ${car.status === "available" ? "bg-green-500" : car.status === "reserved" ? "bg-yellow-500" : "bg-red-600"}
+                    `}
                   >
                     {car.status === "available" ? "Disponível" : car.status === "reserved" ? "Reservado" : "Vendido"}
                   </Badge>
+
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <CardHeader className="p-0 mb-4">
@@ -124,7 +112,16 @@ export default function HomePage() {
                       <span className="text-3xl font-bold text-green-500 block mb-4">R$ {car.price.toLocaleString("pt-BR")}</span>
                       {/* Botões com o tema verde e preto */}
                       <div className="flex flex-col gap-2">
-                        <Button size="lg" className="w-full bg-green-500 hover:bg-green-600 text-black font-bold">Ver Detalhes</Button>
+                        <Button
+                          size="lg"
+                          className="
+                            w-full bg-green-500 text-black font-bold
+                            transition-all duration-300 ease-in-out
+                            hover:bg-green-600 hover:scale-105 hover:shadow-md
+                          "
+                        >
+                          Ver Detalhes
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -142,6 +139,38 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Hero Section */}
+      <section 
+        className="relative py-25"
+        style={{
+          backgroundImage: "url(https://lh3.googleusercontent.com/p/AF1QipP4HjSL_xa0c3qZxgoO_CjNa8P6mvGVOPnRjmV7=s680-w680-h510-rw)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
+      >
+        {/* Overlay escuro */}
+        <div className="absolute inset-0 bg-black/70 transition-opacity duration-1000 ease-in-out"></div>
+
+        <div className="relative container mx-auto px-4 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+            <TextType
+              text={["Encontre o Carro dos Seus Sonhos"]}
+              typingSpeed={90}
+              pauseDuration={2000}
+              showCursor={true}
+              cursorCharacter="|"
+            />
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Os melhores seminovos com garantia, procedência e atendimento de confiança.
+          </p>
+        </div>
+
+        <SearchBar />
+      </section>
+
+
       {/* Features Section */}
       <section className="py-24 bg-gray-950/50 border-y border-gray-800">
         <div className="container mx-auto px-6">
@@ -155,7 +184,14 @@ export default function HomePage() {
               { icon: Star, title: "Qualidade Superior", description: "Selecionamos apenas os melhores seminovos para o nosso estoque." },
               { icon: Users, title: "Atendimento Personalizado", description: "Nossa equipe está pronta para ajudar você a fazer a melhor escolha." },
             ].map((feature, index) => (
-              <div key={index} className="text-center p-8 rounded-lg bg-gray-900 border border-gray-800 transition hover:bg-gray-800/50 hover:-translate-y-2">
+                <div
+                  key={index}
+                  className="
+                    text-center p-8 rounded-lg bg-gray-900 border border-gray-800
+                    transition transform duration-500 ease-in-out
+                    hover:bg-gray-800/50 hover:-translate-y-2 hover:shadow-lg
+                  "
+                >
                 <div className="bg-green-500/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/20">
                   <feature.icon className="h-8 w-8 text-green-500" />
                 </div>
