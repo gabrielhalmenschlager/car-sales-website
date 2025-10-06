@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Favicon */}
         <link rel="icon" type="image/png" href="/icone-santa-veiculos.png" />
+        <link rel="apple-touch-icon" href="/icone-santa-veiculos.png" />
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         {children}
