@@ -1,15 +1,18 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Users, CheckCircle, Car, CreditCard } from "lucide-react"
+import { Users, CheckCircle, Car, CreditCard, Phone } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { NavBar } from "@/components/ui/navbar"
 import { Footer } from "@/components/ui/footer"
 import TextType from "@/components/ui/text-type"
 import Image from "next/image"
+import { motion } from "framer-motion"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { CTASection } from "@/components/ui/cta"
 
 export default function SobrePage() {
-  // Lista de imagens da galeria
   const images = [
     { src: "/images/loja1.jpg", alt: "Fachada da Santa Veículos" },
     { src: "/images/estoque1.jpg", alt: "Veículos seminovos no pátio" },
@@ -18,174 +21,155 @@ export default function SobrePage() {
 
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Troca automática das imagens a cada 5 segundos
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 5000)
+    const interval = setInterval(() => setCurrentIndex((prev) => (prev + 1) % images.length), 5000)
     return () => clearInterval(interval)
-  }, [images.length])
+  }, [])
+
+  const sectionVariant = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+  }
+
+  const cardVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.2, duration: 0.5 } }),
+  }
 
   return (
     <div className="min-h-screen bg-black text-gray-300">
       <NavBar />
 
-      {/* Hero Section */}
-      <section className="py-24 text-center container mx-auto px-6">
-        <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-          <TextType
-            text={["Sobre a Santa Veículos"]}
-            typingSpeed={90}
-            pauseDuration={2000}
-            showCursor
-            cursorCharacter="|"
-          />
+      {/* Hero */}
+      <motion.section className="py-28 text-center bg-gray-950" initial="hidden" animate="visible" variants={sectionVariant}>
+        <h1 className="text-5xl md:text-6xl font-bold text-green-500 mb-4">
+          <TextType text={["Santa Veículos"]} typingSpeed={90} pauseDuration={2000} showCursor cursorCharacter="|" />
         </h1>
-        <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
+        <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
           Qualidade, confiança e compromisso com você desde 2020.
         </p>
-      </section>
+      </motion.section>
 
-      {/* Sobre a Empresa */}
-      <section className="py-12 bg-gray-950 border-t border-gray-800">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <Card className="bg-black border border-gray-800 hover:border-green-500 transition-all">
+      {/* Nossa História */}
+      <motion.section className="py-16 container mx-auto px-6" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={sectionVariant}>
+        <Card className="bg-gray-950 border border-gray-800 hover:border-green-500 transition-all duration-300 transform hover:scale-[1.02] shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-3xl font-bold text-green-500">Nossa História</CardTitle>
+            <CardDescription className="text-gray-400">Conheça mais sobre quem somos e o que nos move</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4 text-gray-300 leading-relaxed">
+            <p>Constituída em <strong>março de 2020</strong>, a <strong>Santa Veículos</strong> atua no mercado de veículos seminovos da região do <strong>Vale do Rio Pardo – RS</strong>. Nosso objetivo é aliar <strong>qualidade</strong> e <strong>preços acessíveis</strong>, oferecendo a melhor experiência para nossos clientes.</p>
+            <p>Localizada em <strong>Santa Cruz do Sul</strong>, contamos com uma equipe de profissionais capacitados e comprometidos em garantir excelência no atendimento e transparência em cada negociação.</p>
+            <p>Todos os veículos comercializados são <strong>revisados</strong> e possuem <strong>garantia de 90 dias</strong> ou <strong>3.000 km</strong>, com certificação e procedência garantida.</p>
+            <p>Facilitamos a compra do seu próximo carro, aceitando <strong>veículos na troca</strong> e oferecendo <strong>financiamentos em até 60x</strong> com aprovação rápida e justa.</p>
+          </CardContent>
+        </Card>
+      </motion.section>
+
+      {/* Galeria */}
+      <motion.section
+  className="py-20 container mx-auto px-6"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  variants={sectionVariant}
+>
+  <h2 className="text-4xl font-bold text-green-500 text-center mb-12">Nossa Estrutura</h2>
+
+  <div className="relative w-full md:w-4/5 mx-auto h-[400px] md:h-[500px] overflow-hidden rounded-2xl shadow-xl border border-gray-800">
+    {images.map((img, index) => (
+      <motion.div
+        key={index}
+        className="absolute inset-0"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: index === currentIndex ? 1 : 0, x: index === currentIndex ? 0 : 50 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Image
+          src={img.src}
+          alt={img.alt}
+          fill
+          className="object-cover object-center rounded-2xl"
+        />
+      </motion.div>
+    ))}
+
+    {/* Botões de navegação */}
+    <button
+      onClick={() => setCurrentIndex((currentIndex - 1 + images.length) % images.length)}
+      className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full"
+    >
+      ◀
+    </button>
+    <button
+      onClick={() => setCurrentIndex((currentIndex + 1) % images.length)}
+      className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full"
+    >
+      ▶
+    </button>
+
+    {/* Indicadores */}
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+      {images.map((_, idx) => (
+        <span
+          key={idx}
+          className={`h-3 w-3 rounded-full cursor-pointer transition-all ${
+            idx === currentIndex ? "bg-green-500 w-6" : "bg-gray-500"
+          }`}
+          onClick={() => setCurrentIndex(idx)}
+        />
+      ))}
+    </div>
+  </div>
+
+  <p className="text-gray-400 mt-6 text-center">
+    Um espaço pensado para proporcionar conforto, confiança e a melhor experiência na hora da compra.
+  </p>
+</motion.section>
+
+
+      {/* Missão, Visão e Valores */}
+      <motion.section className="bg-gray-950 py-20 border-t border-gray-800" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={sectionVariant}>
+        <div className="container mx-auto px-6 max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          {[
+            { title: "Missão", desc: "Oferecer veículos de qualidade com atendimento personalizado e as melhores condições de compra." },
+            { title: "Visão", desc: "Ser referência em revenda de veículos na região, reconhecida pela confiança e satisfação dos clientes." },
+            { title: "Valores", desc: "Honestidade, comprometimento, qualidade e respeito são a base de nossas relações." },
+          ].map((item, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.2, duration: 0.6 }} viewport={{ once: true }} className="p-6 bg-gray-900 rounded-xl shadow-lg">
+              <h3 className="text-2xl font-bold text-green-500 mb-4">{item.title}</h3>
+              <p className="text-gray-400">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Localização */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="text-center mb-12">
+          <Card className="bg-gray-950 border border-gray-800 hover:border-green-500 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-3xl font-bold text-green-500">
-                Nossa História
-              </CardTitle>
-              <CardDescription className="text-gray-400">
-                Conheça mais sobre quem somos e o que nos move
-              </CardDescription>
+              <CardTitle className="text-white">Nossa Localização</CardTitle>
+              <CardDescription className="text-gray-400">Venha nos visitar em nossa loja física</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6 text-gray-300 leading-relaxed">
-              <p>
-                Constituída em <strong>março de 2020</strong>, a <strong>Santa Veículos</strong> atua no mercado de veículos
-                seminovos da região do <strong>Vale do Rio Pardo – RS</strong>. Nosso objetivo é aliar
-                <strong> qualidade</strong> e <strong>preços acessíveis</strong>, oferecendo a melhor experiência para nossos clientes.
-              </p>
-              <p>
-                Localizada em <strong>Santa Cruz do Sul</strong>, contamos com uma equipe de profissionais capacitados
-                e comprometidos em garantir excelência no atendimento e transparência em cada negociação.
-              </p>
-              <p>
-                Todos os veículos comercializados pela Santa Veículos são <strong>revisados</strong> e possuem
-                <strong> garantia de 90 dias</strong> ou <strong>3.000 km</strong>, com certificação e garantia de procedência.
-              </p>
-              <p>
-                Para facilitar a compra do seu próximo carro, aceitamos <strong>veículos na troca</strong> com avaliação justa
-                e oferecemos <strong>financiamentos em até 60x</strong> através das melhores instituições bancárias,
-                sempre mediante aprovação de crédito.
-              </p>
+            <CardContent>
+              <div className="rounded-lg overflow-hidden h-64 lg:h-72">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d-52.432123!3d-29.678123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951b1a2b3c4d5e6f%3A0x123456789abcdef!2sRua%20S%C3%A3o%20Jos%C3%A9%201432%2C%20Santa%20Cruz%20do%20Sul%2C%20RS!5e0!3m2!1spt-BR!2sbr!4v1690000000000!5m2!1spt-BR!2sbr"
+                  width="100%" height="100%" style={{ border: 0 }} allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="rounded-lg"
+                />
+              </div>
             </CardContent>
           </Card>
         </div>
       </section>
 
-      {/* Galeria / Carrossel */}
-      <section className="py-20 bg-black border-t border-gray-800">
-        <div className="container mx-auto px-6 max-w-5xl text-center">
-          <h2 className="text-4xl font-bold text-green-500 mb-10">Nossa Estrutura</h2>
-          <div className="relative w-full h-[400px] overflow-hidden rounded-2xl shadow-lg border border-gray-800">
-            {images.map((image, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                  index === currentIndex ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover object-center rounded-2xl"
-                />
-              </div>
-            ))}
-          </div>
-          <p className="text-gray-400 mt-6">
-            Um espaço pensado para proporcionar conforto, confiança e uma excelente experiência na hora da compra.
-          </p>
-        </div>
-      </section>
+      {/* CTA Section */}
+      <CTASection />
 
-      {/* Valores e Diferenciais */}
-      <section className="py-20 container mx-auto px-6 max-w-6xl">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-green-500 mb-4">Por Que Escolher a Santa Veículos?</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Trabalhamos com transparência, confiança e o compromisso de entregar sempre o melhor negócio para você.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <Card className="bg-gray-950 border border-gray-800 hover:border-green-500 transition-all">
-            <CardHeader>
-              <Car className="h-10 w-10 text-green-500 mb-3" />
-              <CardTitle className="text-white">Veículos Revisados</CardTitle>
-              <CardDescription className="text-gray-400">
-                Todos os veículos passam por inspeção completa e possuem garantia.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="bg-gray-950 border border-gray-800 hover:border-green-500 transition-all">
-            <CardHeader>
-              <CheckCircle className="h-10 w-10 text-green-500 mb-3" />
-              <CardTitle className="text-white">Procedência Garantida</CardTitle>
-              <CardDescription className="text-gray-400">
-                Garantimos a origem e documentação de todos os veículos comercializados.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="bg-gray-950 border border-gray-800 hover:border-green-500 transition-all">
-            <CardHeader>
-              <Users className="h-10 w-10 text-green-500 mb-3" />
-              <CardTitle className="text-white">Atendimento de Excelência</CardTitle>
-              <CardDescription className="text-gray-400">
-                Equipe treinada e pronta para entender suas necessidades e ajudar na escolha ideal.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="bg-gray-950 border border-gray-800 hover:border-green-500 transition-all">
-            <CardHeader>
-              <CreditCard className="h-10 w-10 text-green-500 mb-3" />
-              <CardTitle className="text-white">Facilidade no Financiamento</CardTitle>
-              <CardDescription className="text-gray-400">
-                Parceria com os principais bancos, com planos em até 60x e aprovação rápida.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        </div>
-      </section>
-
-      {/* Missão, Visão e Valores */}
-      <section className="bg-gray-950 py-20 border-t border-gray-800">
-        <div className="container mx-auto px-6 max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div className="p-6">
-            <h3 className="text-2xl font-bold text-green-500 mb-4">Missão</h3>
-            <p className="text-gray-400">
-              Oferecer veículos de qualidade com transparência, atendimento personalizado e as melhores condições de compra.
-            </p>
-          </div>
-          <div className="p-6">
-            <h3 className="text-2xl font-bold text-green-500 mb-4">Visão</h3>
-            <p className="text-gray-400">
-              Ser referência em revenda de veículos na região, reconhecida pela confiança e satisfação dos clientes.
-            </p>
-          </div>
-          <div className="p-6">
-            <h3 className="text-2xl font-bold text-green-500 mb-4">Valores</h3>
-            <p className="text-gray-400">
-              Honestidade, comprometimento, qualidade e respeito são a base de todas as nossas relações.
-            </p>
-          </div>
-        </div>
-      </section>
-
+      {/* Footer */}
       <Footer />
+
     </div>
   )
 }

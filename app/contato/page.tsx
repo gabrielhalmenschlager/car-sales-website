@@ -13,6 +13,7 @@ import { NavBar } from "@/components/ui/navbar"
 import { Footer } from "@/components/ui/footer"
 import Link from "next/link"
 import TextType from "@/components/ui/text-type"
+import { CTASection } from "@/components/ui/cta"
 
 export default function ContatoPage() {
   const [formData, setFormData] = useState({
@@ -252,29 +253,11 @@ export default function ContatoPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-green-600 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Pronto para Encontrar Seu Próximo Carro?</h2>
-          <p className="text-black/80 mb-8 max-w-2xl mx-auto">
-            Fale com um de nossos consultores e agende uma visita hoje mesmo.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-black hover:bg-gray-800 text-white font-bold shadow-md">
-              <Link href="tel:51999200699">
-                <span className="flex items-center justify-center gap-2">
-                  <Phone className="h-5 w-5" />
-                  (51) 99920-0699
-                </span>
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="bg-transparent border-2 border-black text-black hover:bg-black hover:text-green-500 font-bold">
-              <Link href="/contato">Enviar Mensagem</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <CTASection />
 
+      {/* Footer */}
       <Footer />
+      
     </div>
   )
 }
